@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Шашки</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="styles/styles.css" rel="stylesheet">
+        <title>Шашки</title>
+    </head>
+
+    <body>
+        <header>
+            <h1>
+             Играть в Шашки
+            </h1>
+        </header>
+
         <nav>
-            <a href="index.html">Главная</a><br>
-            <a href="rules.html">Правила игры</a>
+            <ul>
+                <li>
+                    <a href="index.html">Главная</a></li>
+                <li>
+                    <a href="rules.html">Правила игры</a></li>
+        </ul>
         </nav>
-        <body>
-            <style>
-                        .chess-board { border-spacing: 0; border-collapse: collapse; }
-                        .chess-board th { padding: .5em; }
-                        .chess-board td { border: 5px solid; width: 5em; height: 5em; }
-                        .chess-board .light { background: rgb(223, 219, 211); }
-                        .chess-board .dark { background: rgb(91, 61, 31); }
-                        img {
-                            display: block; width: 100%;
-                             }
-                    </style>
-                </head>
-                <body>
+
+        <main> 
+            <article class="game">
                     <table class="chess-board">
                         <tbody>
                             <tr>
@@ -123,7 +127,19 @@
                                 <td class="light"></td>
                             </tr>
                         </tbody>
-                    </table>     
+                    </table> 
+                </article>
+
+                <article id="history-control">
+                    <header>
+                        <h3>
+                            Партии
+                        </h3>
+                    </header>
+                    <textarea spellcheck="false"></textarea>
+                </article>
+                </main>
+
         <footer>
             <p>&copy; Аубакирова Софья Алексеевна, ММБ-004
                 <a href="https://t.me/hhhsoya">Telegram
