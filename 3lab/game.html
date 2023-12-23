@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="styles/styles.css" rel="stylesheet">
+        <script src="scripts/game.js" defer></script>
+        <title>Шашки</title>
+    </head>
+
+    <body>
+        <header>
+            <h1>
+             Играть в Шашки
+            </h1>
+        </header>
+
+        <nav>
+            <ul>
+                <li>
+                    <a href="index.html">Главная</a></li>
+                <li>
+                    <a href="rules.html">Правила игры</a></li>
+        </ul>
+        </nav>
+
+        <main> 
+            <article class="game">
+                    <table class="chess-board">
+                        <tbody>
+                            <tr>
+                                <th></th>
+                                <th>a</th>
+                                <th>b</th>
+                                <th>c</th>
+                                <th>d</th>
+                                <th>e</th>
+                                <th>f</th>
+                                <th>g</th>
+                                <th>h</th>
+                            </tr>
+                            <th>8</th>
+                            <td class="light" id="a8" onclick="handleFieldClick(this)"><img></td>
+                            <td class="dark"  id="b8" onclick="handleFieldClick(this)"><img></td>
+                            <td class="light" id="c8" onclick="handleFieldClick(this)"><img></td>
+                            <td class="dark"  id="d8" onclick="handleFieldClick(this)"><img></td>
+                            <td class="light" id="e8" onclick="handleFieldClick(this)"><img></td>
+                            <td class="dark"  id="f8" onclick="handleFieldClick(this)"><img></td>
+                            <td class="light" id="g8" onclick="handleFieldClick(this)"><img></td>
+                            <td class="dark"  id="h8" onclick="handleFieldClick(this)"><img></td>
+                           
+                            </tr>
+                            <tr>
+                                <th>7</th>
+                                <td class="dark"  id="a7" onclick="handleFieldClick(this)"><img></td>
+                                <td class="light" id="b7" onclick="handleFieldClick(this)"><img></td>
+                                <td class="dark"  id="c7" onclick="handleFieldClick(this)"><img></td>
+                                <td class="light" id="d7" onclick="handleFieldClick(this)"><img></td>
+                                <td class="dark"  id="e7" onclick="handleFieldClick(this)"><img></td>
+                                <td class="light" id="f7" onclick="handleFieldClick(this)"><img></td>
+                                <td class="dark"  id="g7" onclick="handleFieldClick(this)"><img></td>
+                                <td class="light" id="h7" onclick="handleFieldClick(this)"><img></td>
+                               
+                            </tr>
+                            <tr>
+                                <th>6</th>
+                                <td class="light" id="a6" onclick="handleFieldClick(this)"><img></td>
+                                <td class="dark"  id="b6" onclick="handleFieldClick(this)"><img></td>
+                                <td class="light" id="c6" onclick="handleFieldClick(this)"><img></td>
+                                <td class="dark"  id="d6" onclick="handleFieldClick(this)"><img></td>
+                                <td class="light" id="e6" onclick="handleFieldClick(this)"><img></td>
+                                <td class="dark"  id="f6" onclick="handleFieldClick(this)"><img></td>
+                                <td class="light" id="g6" onclick="handleFieldClick(this)"><img></td>
+                                <td class="dark"  id="h6" onclick="handleFieldClick(this)"><img></td>
+                              
+                            </tr>
+                            <tr>
+                                <th>5</th>
+                                <td class="dark"  id="a5" onclick="handleFieldClick(this)"><img></td>
+                                <td class="light" id="b5" onclick="handleFieldClick(this)"><img></td>
+                                <td class="dark"  id="c5" onclick="handleFieldClick(this)"><img></td>
+                                <td class="light" id="d5" onclick="handleFieldClick(this)"><img></td>
+                                <td class="dark"  id="e5" onclick="handleFieldClick(this)"><img></td>
+                                <td class="light" id="f5" onclick="handleFieldClick(this)"><img></td>
+                                <td class="dark"  id="g5" onclick="handleFieldClick(this)"><img></td>
+                                <td class="light" id="h5" onclick="handleFieldClick(this)"><img></td>
+                                 
+                            </tr>
+                            <tr>
+                                <th>4</th>
+                                <td class="light" id="a4" onclick="handleFieldClick(this)"><img></td>
+                                <td class="dark"  id="b4" onclick="handleFieldClick(this)"><img></td>
+                                <td class="light" id="c4" onclick="handleFieldClick(this)"><img></td>
+                                <td class="dark"  id="d4" onclick="handleFieldClick(this)"><img></td>
+                                <td class="light" id="e4" onclick="handleFieldClick(this)"><img></td>
+                                <td class="dark"  id="f4" onclick="handleFieldClick(this)"><img></td>
+                                <td class="light" id="g4" onclick="handleFieldClick(this)"><img></td>
+                                <td class="dark"  id="h4" onclick="handleFieldClick(this)"><img></td>
+                                 
+                            </tr>
+                            <tr>
+                                <th>3</th>
+                                <td class="dark"  id="a3" onclick="handleFieldClick(this)"><img></td>
+                                <td class="light" id="b3" onclick="handleFieldClick(this)"><img></td>
+                                <td class="dark"  id="c3" onclick="handleFieldClick(this)"><img></td>
+                                <td class="light" id="d3" onclick="handleFieldClick(this)"><img></td>
+                                <td class="dark"  id="e3" onclick="handleFieldClick(this)"><img></td>
+                                <td class="light" id="f3" onclick="handleFieldClick(this)"><img></td>
+                                <td class="dark"  id="g3" onclick="handleFieldClick(this)"><img></td>
+                                <td class="light" id="h3" onclick="handleFieldClick(this)"><img></td>
+                                
+                            </tr>
+                            <tr>
+                                <th>2</th>
+                                <td class="light" id="a2" onclick="handleFieldClick(this)"><img></td>
+                                <td class="dark"  id="b2" onclick="handleFieldClick(this)"><img></td>
+                                <td class="light" id="c2" onclick="handleFieldClick(this)"><img></td>
+                                <td class="dark"  id="d2" onclick="handleFieldClick(this)"><img></td>
+                                <td class="light" id="e2" onclick="handleFieldClick(this)"><img></td>
+                                <td class="dark"  id="f2" onclick="handleFieldClick(this)"><img></td>
+                                <td class="light" id="g2" onclick="handleFieldClick(this)"><img></td>
+                                <td class="dark"  id="h2" onclick="handleFieldClick(this)"><img></td>
+                                
+                            </tr>
+                            <tr>
+                                <th>1</th>
+                                <td class="dark"  id="a1" onclick="handleFieldClick(this)"><img></td>
+                                <td class="light" id="b1" onclick="handleFieldClick(this)"><img></td>
+                                <td class="dark"  id="c1" onclick="handleFieldClick(this)"><img></td>
+                                <td class="light" id="d1" onclick="handleFieldClick(this)"><img></td>
+                                <td class="dark"  id="e1" onclick="handleFieldClick(this)"><img></td>
+                                <td class="light" id="f1" onclick="handleFieldClick(this)"><img></td>
+                                <td class="dark"  id="g1" onclick="handleFieldClick(this)"><img></td>
+                                <td class="light" id="h1" onclick="handleFieldClick(this)"><img></td>
+                                
+                            </tr>
+        
+                        </tbody>
+                    </table> 
+                </article>
+
+                <article id="game-control">
+                    <header>
+                        <h3>
+                            Текущее состояние игровой доски
+                        </h3>
+                    </header>
+          
+                    <button type="button" onclick="initialLayout()">   <!-- Щелчок по началу игры -->
+                        Начало
+                    </button>
+          
+                    <button type="button" onclick="example1Layout()">  <!-- Щелчок для примера  -->
+                        Пример 1
+                    </button>
+                </article>
+    
+                <article id="history-control">
+                    <header>
+                        <h3>
+                            История партии
+                        </h3>
+                    </header>
+    
+                    <article>
+                        <h4 id="turn"></h4>
+                    </article>
+    
+                    <textarea id="history" spellcheck="false"></textarea>
+                </article>
+                </main>
+
+        <footer>
+            <p>&copy; Аубакирова Софья Алексеевна, ММБ-004
+                <a href="https://t.me/hhhsoya">Telegram
+                </a>
+            </p>
+        </footer>
+    </body>
+        </html>

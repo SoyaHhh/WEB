@@ -1,0 +1,90 @@
+* {
+    text-align: center;
+    font-size: 100%;
+    font-family: Arial, sans-serif;;
+}
+
+html {
+    overflow: hidden; /*предотвращение прокрутки если текст не вошел*/
+}
+
+body{
+    height: 100vh;
+    background-color: rgb(124, 103, 123);
+
+    margin: 0;
+    margin: 0;
+    padding: 0;
+
+    display: grid; /*сеточная модель разметки*/
+
+    grid-template-areas: 
+        "header header header"
+        "nav    main   main"
+        "nav    main   main"
+        "nav    footer footer";
+
+    grid-template-columns: 2fr 30fr;
+    grid-template-rows: 1fr 10fr 1fr 0.5fr;
+}
+/**/
+body > header {  /*по заданию:оформление текста других цветов*/
+    grid-area: header;
+    background-color: rgb(122, 27, 106);
+    color: rgb(0, 0, 0);
+}
+
+body > nav {  /*по заданию:оформление текста других цветов*/
+    grid-area: nav;
+    float: left;
+    background-color: rgb(158, 129, 154);
+    
+    border-bottom-right-radius: 30px; /* Закругление правого нижнего угла */
+}
+
+body > nav > ul > li { /*по заданию:тег <nav> визуально располагаться слева от основного контента*/
+    text-align: left;
+}
+
+h1 {
+    margin: 1%; /*отступы хедера потом поменять*/
+}
+
+main > h1 {
+    text-align: left; /*Добро пожаловать!*/
+}
+
+body > main {
+    grid-area: main;
+    background-color: rgb(245, 237, 237);
+
+    overflow: auto;   /*тут будет полоса прокрутки*/
+}
+
+ body > main > article > section{
+    padding: 0.5ch;
+    text-align: center;
+}
+
+body > footer {
+    grid-area: footer;
+    background-color: rgb(124, 103, 123);
+    overflow: auto;
+}
+ 
+
+.chess-board { border-spacing: 0; border-collapse: collapse; }
+.chess-board th { padding: .5em; }
+.chess-board td { border: 3px solid; width: 4em; height: 4em; }
+.chess-board .light { background: rgb(255, 255, 255); }
+.chess-board .dark { background: rgb(47, 45, 45); }
+.chess-board img { display: block; width: 100%;}
+
+.game {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        
+    }
+    
+ 
