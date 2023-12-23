@@ -3,7 +3,7 @@
 //описание классов шашечной логики
 //поля
 class Field {
-    #className; 
+    #className;
     #type;
 
     constructor(className, type) {
@@ -21,8 +21,8 @@ class Field {
 }
 //фигуры
 class Piece extends Field {
-    #imgSrc; //путь к картинке
-    #pieceColor; 
+    #imgSrc;
+    #pieceColor;
 
     constructor(className, type, imgSrc, pieceColor) {
         super(className, type);
@@ -40,10 +40,10 @@ class Piece extends Field {
 }
 //ходы
 class Move {
-    #fromFieldId; //стартовая клетка
-    #toFieldId;  //целевая клетка
-    #type; //тип хода
-    #movedPiece; //фигура соверш ход
+    #fromFieldId;
+    #toFieldId;
+    #type;
+    #movedPiece;
 
     constructor(fromFieldId, toFieldId, type, movedPiece) {
         this.#fromFieldId = fromFieldId;
@@ -70,11 +70,11 @@ class Move {
 }
 //захваты
 class Capture extends Move {
-    #capturedPieceId; //идентиф(номер координаты на доске) фигуры которая была срублена
-    #capturedPiece; //фигура которая была захвачена
+    #capturedPieceId;
+    #capturedPiece;
 
     constructor(
-        fromFieldId, 
+        fromFieldId,
         toFieldId,
         type,
         movedPiece,
@@ -94,6 +94,7 @@ class Capture extends Move {
         return this.#capturedPiece;
     }
 }
+
 
 //инициализация шахматной доски фигур и карактеристики
 // типы полей:светлое темное
@@ -127,9 +128,9 @@ const DARK_FIELD = new Field(
 );
 //создание обьектов фигур 
 const WHITE_PAWN = new Piece(
-    DARK,  //только по черным мы ходим и располагаемс
+    DARK,    //только по черным мы ходим и располагаемс
     PAWN,
-    WHITE_PAWN_SRC,   //imgSrc путь короче к картинке
+    WHITE_PAWN_SRC,    //imgSrc путь короче к картинке
     WHITE
 );
 const BLACK_PAWN = new Piece(
@@ -160,11 +161,15 @@ const CAPTURE = "capture";
 const COMMIT_TURN_BUTTON = "commit-turn";
 const ROLLBACK_TURN_BUTTON = "rollback-turn";
 
+// layouts
+const INITIAL_LAYOUT = "initial";
+const EXAMPLE1_LAYOUT = "example1";
+
 // создание обьекта доски типа board
 const board = new Board();
 
 function Board() {
-     //вложенная функция возвращающая обьект вертикальную колоку с ячейками 1-8 на доске
+    //вложенная функция возвращающая обьект вертикальную колоку с ячейками 1-8 на доске
     const Column = function() {
         return {
             1: null,
@@ -215,14 +220,19 @@ let captureHistory;
 //отслеживание текущего номера хода в партии
 let currentTurnNumber;
 
+let layout;
+
 initialLayout();
+layout = INITIAL_LAYOUT;
 // функция для начальной установки шахматной доски 
 //устанавливает начальное распределение фигур на доске
 function initialLayout() {
-    for (let row = 8; row >= 1; --row) {  
-        let isDarkField = row % 2 === 1;  //является ли поле темным?
+	layout = INITIAL_LAYOUT;
 
-        let field;  //определяется от текущего row
+    for (let row = 8; row >= 1; --row) {
+        let isDarkField = row % 2 === 1; //является ли поле темным?
+
+        let field; //определяется от текущего row
 
         switch (row) {
             case 8:
@@ -252,14 +262,16 @@ function initialLayout() {
 
             removeStyle(id);
             
-            isDarkField = !isDarkField;  //чередования цвета полей в шашечной доске
+            isDarkField = !isDarkField; //чередования цвета полей в шашечной доске
         }
     }
 
-    resetOtherBoardState();  // действия по сбросу состояния доски
+    resetOtherBoardState(); // действия по сбросу состояния доски
 }
 // установку фигур на шахматной доске в соответствии с конкретным распределением для примера1
 function example1Layout() {
+	layout = EXAMPLE1_LAYOUT;
+
     for (let row = 8; row >= 1; --row) {
         let isDarkField = row % 2 === 1;
 
@@ -309,7 +321,22 @@ function example1Layout() {
 
     resetOtherBoardState();
 }
-//обновление html элементов ячеек в соответствии с field
+
+function setLayout() {
+	switch (layout) {
+	    case INITIAL_LAYOUT:
+            initialLayout();
+            break;
+        case EXAMPLE1_LAYOUT:
+        	example1Layout();
+        	break;
+        default:
+        	initialLayout();
+            break;
+    }
+	
+}
+//обновление html элементов ячеек в соответствии с field 
 function setFieldHTML(id, field) {
     const tdElement = document.getElementById(id);
 
@@ -362,7 +389,7 @@ function handleFieldClick(td) {
 
     if (selectedPieceId === null) {
         const fieldCanBeSelected = () => {  //может ли поле быть выбрано
-            if (!(field instanceof Piece)) // является ли цвет фигуры в выбранной ячейке текущим цветом, который должен делать ход (определенный переменной turn
+            if (!(field instanceof Piece))
                 return false;
 
             if (field.getPieceColor() !== turn)
@@ -371,21 +398,21 @@ function handleFieldClick(td) {
             if (moveHistory !== null)
                 return false;
 
-            if (captureHistory.length > 0) { //Получает последнее взятие из истории.
+            if (captureHistory.length > 0) {
                 const lastCapture = captureHistory[captureHistory.length - 1];
 
-                if (lastCapture.getToFieldId() !== id) //является ли текущее поле тем, на которое завершился последний ход взятия
+                if (lastCapture.getToFieldId() !== id)
                     return false;
 
-                if (getPossibleCaptures(id, field).length === 0) //есть ли у текущей фигуры возможные взятия
+                if (getPossibleCaptures(id, field).length === 0)
                     return false;
             }
 
             return true;
         };
 
-        if (fieldCanBeSelected()) {   //установка выделения
-            selectField(id, field);
+        if (fieldCanBeSelected()) {
+            selectField(id, field); //установка выделения
         }
     }
     else {
@@ -398,9 +425,9 @@ function handleFieldClick(td) {
         };
 
         if (id === selectedPieceId) {
-            unselectField(id);   //снятие выделения
+            unselectField(id);  //снятие выделения
         }
-        else if (fieldIsPossibleMoveOrCapture()) {   //поле может быть целью возможного хода или захвата
+        else if (fieldIsPossibleMoveOrCapture()) {  //поле может быть целью возможного хода или захвата
             makeMoveOrCapture(id);
         }
     }
@@ -426,7 +453,7 @@ function selectField(id, piece) {
     const canOnlyCapture = canOtherPiecesCaptureExcept(id);
 
     possibleCaptures = getPossibleCaptures(id, piece);
- 
+
     const anyCaptures = possibleCaptures.length > 0;
 //если можно только захватывать и нет возможных захватов, и наоборот; установка цветов
     if (canOnlyCapture && !anyCaptures)
@@ -437,7 +464,8 @@ function selectField(id, piece) {
 
     const moveColor = anyCaptures ? "red" : "green";    
 
-    const moves = anyCaptures ? possibleCaptures : possibleMoves;
+    const moves = anyCaptures ? possibleCaptures : possibleMoves;  //массив действий:либо захваты либо ходы
+
 
     for (const move of moves)
         setCSSColor(move.getToFieldId(), moveColor);
@@ -446,7 +474,7 @@ function selectField(id, piece) {
 function unselectField(id) {
     const anyCaptures = possibleCaptures.length > 0;
 
-    const moves = anyCaptures ? possibleCaptures : possibleMoves; //массив действий:либо захваты либо ходы
+    const moves = anyCaptures ? possibleCaptures : possibleMoves;
 
     for (const move of moves)
         removeStyle(move.getToFieldId());
@@ -466,11 +494,11 @@ function canOtherPiecesCaptureExcept(exceptId) {
         for (const columnChar of "abcdefgh") {
             const id = columnChar + row;
 
-            if (id === exceptId) //пропускаем итерацию если ячейка равна exceptId
+            if (id === exceptId)
                 continue;
 
-            const field = board[columnChar][row]; //получаем содержимое ячейки
-//Проверяет, является ли содержимое ячейки фигурой текущей стороны (turn), и если да, то вызывает функцию getPossibleCaptures для определения возможных взятий этой фигуры.
+            const field = board[columnChar][row];
+
             if (field instanceof Piece 
                     && field.getPieceColor() === turn
                     && getPossibleCaptures(id, field).length > 0) {
@@ -485,7 +513,7 @@ function canOtherPiecesCaptureExcept(exceptId) {
 function getPossibleMoves(id, piece) {
     const column = id.charCodeAt(0) - "a".charCodeAt(0) + 1;
     const row = Number(id[1]);
-//извлеч коорд строки  из идент ячейки
+
     switch (piece.getType()) {
         case PAWN:
             return getPossibleMovesForPawn(id, column, row);
@@ -520,7 +548,7 @@ function getPossibleMovesForPawn(id, column, row) {
 function getPossibleMovesForKing(id, column, row) {
     const moves = new Array();
 
-    const checkMoveAndPush = (cOp, rOp) => {   //изменение колонки или строки
+    const checkMoveAndPush = (cOp, rOp) => {
         for (
                 let toC = cOp(column),
                     toR = rOp(row);
@@ -569,7 +597,7 @@ function getPossibleCapturesForPawn(id, column, row) {
         const toR = rOp(captureR);
 
         if (isValidCaptureField(captureC, captureR) && isValidMoveField(toC, toR)) {
-            pushCapture(   //являются ли поля допустимыми для захвата
+            pushCapture(  //являются ли поля допустимыми для захвата
                 id,
                 toC,
                 toR,
@@ -602,7 +630,7 @@ function getPossibleCapturesForKing(id, column, row) {
             captureR = rOp(captureR);
         }
 //двойной цикл, который идет в направлении от дамки до края доски,
-//ища первую допустимую позицию для захвата.
+//ища первую допустимую позицию для захвата. 
         if (isValidCaptureField(captureC, captureR)) {
             for (
                     let toC = cOp(captureC),
@@ -756,6 +784,8 @@ function makeCapture(toId) {
     ) {
         disableButton(COMMIT_TURN_BUTTON, false);
     }
+	
+	return piece;
 }
 //выполнение обычного хода в игре;обновление игрового состояния после выполнения хода
 function makeMove(toId) {
@@ -786,7 +816,7 @@ function disableButton(buttonId, disable) {
     const button = document.getElementById(buttonId);
 
     if (disable)
-        button.setAttribute("disabled", "");
+        button.setAttribute("disabled", "");  //true
     else
         button.removeAttribute("disabled");
 }
@@ -806,7 +836,7 @@ function getPawnOrKing(move) {
     else if (turn === BLACK && move.getToFieldId()[1] === "1")
         return BLACK_KING;
     else
-        return move.getMovedPiece();    //возвращает шашку 
+        return move.getMovedPiece();   //возвращает шашку 
 }
 //подтверждение хода; завершение хода и смена текущего игрока
 function commitTurn() {
@@ -945,8 +975,7 @@ function handleSetLayoutClick() {
 
     const lines = history.value.split(/\r?\n/);
 
-    //сброс расстановки шахматных фигур к начальному состоянию
-    initialLayout();
+    setLayout();
 
     let currentTurnNumber = 1;
 
@@ -966,7 +995,7 @@ function handleSetLayoutClick() {
         if (lineComponents.length < 2 || lineComponents.length > 3) {
             alertInvalidLine(line, "Неверная запись хода");
 
-            initialLayout();
+            setLayout();
 
             return;
         }
@@ -982,7 +1011,7 @@ function handleSetLayoutClick() {
         if (blackTurn === null && currentTurnNumber !== lines.length) {
             alertInvalidLine(line, "Отсутствует ход чёрных");
 
-            initialLayout();
+            setLayout();
 
             return;
         }
@@ -996,13 +1025,13 @@ function handleSetLayoutClick() {
                     currentTurnNumber
                 )
         ) {
-            initialLayout();
+            setLayout();
 
             return;
         }
 
         if (!tryToMakeTurns(line, whiteTurn, blackTurn)) {
-            initialLayout();
+            setLayout();
 
             return;
         }
@@ -1110,7 +1139,7 @@ function tryToMakeATurn(line, currentTurn) {
 //все возможные взятия для текущей шашки
     const anyCaptures = possibleCaptures.length > 0;
 //доступные взятия
-    if (canOnlyCapture && !anyCaptures) {    
+    if (canOnlyCapture && !anyCaptures) {
         alertInvalidLine(
             line,
             `В ходе ${currentTurn} нет доступных ходов и взятий`
@@ -1207,7 +1236,7 @@ function tryToMakeACapture(line, currentTurn, fromId, piece) {
     for (const toId of toIds) {  //сущ ли возможное взятие из взятий?
         if (
             !possibleCaptures.some(
-                possibleCapture => possibleCapture.getToFieldId() 
+                possibleCapture => possibleCapture.getToFieldId()
                     === toId
             )
         ) {
@@ -1220,11 +1249,11 @@ function tryToMakeACapture(line, currentTurn, fromId, piece) {
             return false;
         }
 //если true, то осуществляет взятие на указанное поле
-        makeCapture(toId);
+        piece = makeCapture(toId);
 
-        possibleCaptures = new Array(); //очищ массива возможных взятий
+        possibleCaptures = new Array();
 
-        // Перерасчёт возможных взятий
+        // Перерасчёт
 
         fromId = toId;
 
