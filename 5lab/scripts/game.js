@@ -3,7 +3,7 @@
 //описание классов шашечной логики
 //поля
 class Field {
-    #className;
+    #className; 
     #type;
 
     constructor(className, type) {
@@ -21,8 +21,8 @@ class Field {
 }
 //фигуры
 class Piece extends Field {
-    #imgSrc;
-    #pieceColor;
+    #imgSrc; //путь к картинке
+    #pieceColor; 
 
     constructor(className, type, imgSrc, pieceColor) {
         super(className, type);
@@ -40,10 +40,10 @@ class Piece extends Field {
 }
 //ходы
 class Move {
-    #fromFieldId;
-    #toFieldId;
-    #type;
-    #movedPiece;
+    #fromFieldId; //стартовая клетка
+    #toFieldId;  //целевая клетка
+    #type; //тип хода
+    #movedPiece; //фигура соверш ход
 
     constructor(fromFieldId, toFieldId, type, movedPiece) {
         this.#fromFieldId = fromFieldId;
@@ -70,11 +70,11 @@ class Move {
 }
 //захваты
 class Capture extends Move {
-    #capturedPieceId;
-    #capturedPiece;
+    #capturedPieceId; //идентиф(номер координаты на доске) фигуры которая была срублена
+    #capturedPiece; //фигура которая была захвачена
 
     constructor(
-        fromFieldId,
+        fromFieldId, 
         toFieldId,
         type,
         movedPiece,
@@ -362,7 +362,7 @@ function handleFieldClick(td) {
 
     if (selectedPieceId === null) {
         const fieldCanBeSelected = () => {  //может ли поле быть выбрано
-            if (!(field instanceof Piece))
+            if (!(field instanceof Piece)) // является ли цвет фигуры в выбранной ячейке текущим цветом, который должен делать ход (определенный переменной turn
                 return false;
 
             if (field.getPieceColor() !== turn)
@@ -371,13 +371,13 @@ function handleFieldClick(td) {
             if (moveHistory !== null)
                 return false;
 
-            if (captureHistory.length > 0) {
+            if (captureHistory.length > 0) { //Получает последнее взятие из истории.
                 const lastCapture = captureHistory[captureHistory.length - 1];
 
-                if (lastCapture.getToFieldId() !== id)
+                if (lastCapture.getToFieldId() !== id) //является ли текущее поле тем, на которое завершился последний ход взятия
                     return false;
 
-                if (getPossibleCaptures(id, field).length === 0)
+                if (getPossibleCaptures(id, field).length === 0) //есть ли у текущей фигуры возможные взятия
                     return false;
             }
 
@@ -466,11 +466,11 @@ function canOtherPiecesCaptureExcept(exceptId) {
         for (const columnChar of "abcdefgh") {
             const id = columnChar + row;
 
-            if (id === exceptId)
+            if (id === exceptId) //пропускаем итерацию если ячейка равна exceptId
                 continue;
 
-            const field = board[columnChar][row];
-
+            const field = board[columnChar][row]; //получаем содержимое ячейки
+//Проверяет, является ли содержимое ячейки фигурой текущей стороны (turn), и если да, то вызывает функцию getPossibleCaptures для определения возможных взятий этой фигуры.
             if (field instanceof Piece 
                     && field.getPieceColor() === turn
                     && getPossibleCaptures(id, field).length > 0) {
@@ -485,7 +485,7 @@ function canOtherPiecesCaptureExcept(exceptId) {
 function getPossibleMoves(id, piece) {
     const column = id.charCodeAt(0) - "a".charCodeAt(0) + 1;
     const row = Number(id[1]);
-
+//извлеч коорд строки  из идент ячейки
     switch (piece.getType()) {
         case PAWN:
             return getPossibleMovesForPawn(id, column, row);
