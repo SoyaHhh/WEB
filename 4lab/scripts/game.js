@@ -106,11 +106,11 @@ const PAWN = "pawn";
 const KING = "king";
 
 // piece image sources
-const WHITE_PAWN_SRC = "Images/whitePiece.png"
-const BLACK_PAWN_SRC = "Images/blackPiece.png"
+const WHITE_PAWN_SRC = "image/whitePiece.png"
+const BLACK_PAWN_SRC = "image/blackPiece.png"
 
-const WHITE_KING_SRC = "Images/whiteKing.png"
-const BLACK_KING_SRC = "Images/blackKing.png"
+const WHITE_KING_SRC = "image/whiteKing.png"
+const BLACK_KING_SRC = "image/blackKing.png"
 
 // цвета фигур 
 const WHITE = "white";
